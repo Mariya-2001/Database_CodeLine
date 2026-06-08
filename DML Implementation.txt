@@ -1,0 +1,225 @@
+--INSERT--
+
+
+INSERT INTO DEPARTMENT (DNUM, DName, SSN, Hiring_Date) VALUES (1, 'IT', NULL, SYSDATE);
+
+1 row inserted
+
+INSERT INTO DEPARTMENT (DNUM, DName, SSN, Hiring_Date) VALUES (2, 'Engineering', NULL, SYSDATE);
+
+1 row inserted
+
+INSERT INTO DEPARTMENT (DNUM, DName, SSN, Hiring_Date) VALUES (3, 'Science', NULL, SYSDATE);
+
+1 row inserted
+
+INSERT INTO DEPARTMENT (DNUM, DName, SSN, Hiring_Date) VALUES (4, 'Pharmacy', NULL, SYSDATE);
+
+1 row inserted
+
+INSERT INTO DEPARTMENT (DNUM, DName, SSN, Hiring_Date) VALUES (5, 'Education', NULL, SYSDATE);
+
+1 row inserted
+
+COMMIT;
+
+Commit complete.
+
+-------------------------------------------------------------------------------------------
+
+INSERT INTO EMPLOYEE (SSN, Fname, Lname, Gender, Birth_date, DNum, Supervisor) VALUES ('123456789', 'Mariya', 'Allamki', 'Female', TO_DATE('2001-10-29', 'YYYY-MM-DD'), 1, NULL);
+
+1 row inserted
+
+INSERT INTO EMPLOYEE (SSN, Fname, Lname, Gender, Birth_date, DNum, Supervisor) VALUES ('987654321', 'Nabhan', 'Allamki', 'Male', TO_DATE('1997-10-16', 'YYYY-MM-DD'), 2, NULL);
+
+1 row inserted
+
+INSERT INTO EMPLOYEE (SSN, Fname, Lname, Gender, Birth_date, DNum, Supervisor) VALUES ('543216789', 'Razan', 'Alharthi', 'Female', TO_DATE('200-05-26', 'YYYY-MM-DD'), 3, NULL);
+
+1 row inserted
+
+INSERT INTO EMPLOYEE (SSN, Fname, Lname, Gender, Birth_date, DNum, Supervisor) VALUES ('678954321', 'Mohammed', 'LL', 'Male', TO_DATE('2005-07-1', 'YYYY-MM-DD'), 4, NULL);
+
+1 row inserted
+
+INSERT INTO EMPLOYEE (SSN, Fname, Lname, Gender, Birth_date, DNum, Supervisor) VALUES ('214365879', 'Sara', 'bndf', 'Female', TO_DATE('2011-12-12', 'YYYY-MM-DD'), 5, NULL);
+
+1 row inserted
+
+COMMIT;
+
+Commit complete.
+
+---------------------------------------------------------------------------------------------
+
+
+INSERT INTO PROJECT (PNumber, PName, Location, City, DNum) VALUES (10, 'DML Implelemntation', 'Codeline', 'Muscat', 1);
+
+1 row inserted
+
+INSERT INTO PROJECT (PNumber, PName, Location, City, DNum) VALUES (20, 'Electricity mesuring', 'Namaa', 'Barka', 2);
+
+1 row inserted
+
+INSERT INTO PROJECT (PNumber, PName, Location, City, DNum) VALUES (30, 'Telecommunication', 'TRa', 'rustaq', 3);
+
+1 row inserted
+
+INSERT INTO PROJECT (PNumber, PName, Location, City, DNum) VALUES (40, 'Brewing coffee', 'Cafe', 'rustaq', 4);
+
+1 row inserted
+
+INSERT INTO PROJECT (PNumber, PName, Location, City, DNum) VALUES (50, 'Edu in Oman', 'Ministry of Edu', 'Muscat', 5);
+
+1 row inserted
+
+COMMIT;
+
+Commit complete.
+
+----------------------------------------------------------------------------------------------
+
+
+INSERT INTO WORKING_HOURS (SSN, PNumber, Hours) VALUES ('123456789', 10, 40.0);
+
+1 row inserted
+
+INSERT INTO WORKING_HOURS (SSN, PNumber, Hours) VALUES ('121212121', 20, 33.0);
+
+Error starting at line : 10 in command -
+INSERT INTO WORKING_HOURS (SSN, PNumber, Hours) VALUES ('121212121', 20, 33.0)
+Error report -
+ORA-02291: integrity constraint (MARIYA.FK_WH_EMPLOYEE) violated - parent key not found
+
+https://docs.oracle.com/error-help/db/ora-02291/
+
+More Details :
+https://docs.oracle.com/error-help/db/ora-02291/
+
+
+INSERT INTO WORKING_HOURS (SSN, PNumber, Hours) VALUES ('543216789', 20, 33.0);
+
+1 row inserted
+
+INSERT INTO WORKING_HOURS (SSN, PNumber, Hours) VALUES ('987654321', 30, 12.0);
+
+1 row inserted
+
+INSERT INTO WORKING_HOURS (SSN, PNumber, Hours) VALUES ('214365879', 40, 5.0);
+
+1 row inserted
+
+INSERT INTO WORKING_HOURS (SSN, PNumber, Hours) VALUES ('678954321', 50, 30.0);
+
+1 row inserted
+
+COMMIT;
+
+Commit complete.
+
+
+-----------------------------------------------------------------------------------------------
+
+INSERT INTO DEPENDENT (Dependent_Name,Gender,Birth_Date,SSN) VALUES ('Mariya Allamki','M', TO_DATE('2005-11-05', 'YYYY-MM-DD'),'678954321')
+
+1 row inserted
+
+INSERT INTO DEPENDENT (Dependent_Name,Gender,Birth_Date,SSN) VALUES ('Fatma Almamari','F', TO_DATE('1995-06-07', 'YYYY-MM-DD'),'214365879');
+
+1 row inserted
+
+INSERT INTO DEPENDENT (Dependent_Name,Gender,Birth_Date,SSN) VALUES ('Omer Allamki','M', TO_DATE('1997-04-17', 'YYYY-MM-DD'),'987654321');
+
+1 row inserted
+
+INSERT INTO DEPENDENT (Dependent_Name,Gender,Birth_Date,SSN) VALUES ('Ahmed Almawali','M', TO_DATE('2009-08-20', 'YYYY-MM-DD'),'123456789');
+
+1 row inserted
+
+INSERT INTO DEPENDENT (Dependent_Name,Gender,Birth_Date,SSN) VALUES ('Buthaina Alkindi','F', TO_DATE('2002-04-18', 'YYYY-MM-DD'),'543216789');
+
+1 row inserted
+
+COMMIT;
+
+Commit complete.
+
+-------------------------------------------------------------------------------------------------
+
+INSERT INTO LOCATIONS (DNum,Location) VALUES (1,'Codeline');
+
+1 row inserted
+
+INSERT INTO LOCATIONS (DNum,Location) VALUES (2,'Barks');
+
+1 row inserted
+
+INSERT INTO LOCATIONS (DNum,Location) VALUES (3,'rustaq');
+
+1 row inserted
+
+INSERT INTO LOCATIONS (DNum,Location) VALUES (4,'rustaq');
+
+1 row inserted
+
+INSERT INTO LOCATIONS (DNum,Location) VALUES (5,'Muscat');
+
+1 row inserted
+
+COMMIT;
+
+Commit complete.
+
+
+--------------------------------------------------------------------------------------------------
+--UPDATE--
+
+UPDATE WORKING_HOURS SET Hours = 45.0 WHERE SSN = '678954321' AND PNumber = 50;
+
+1 row updated.
+
+UPDATE PROJECT SET Location = 'Tech Complex', City = 'Salalah' WHERE PNumber = 30;
+
+1 row updated.
+
+UPDATE DEPENDENT SET Gender = 'F' WHERE SSN = '678954321';
+
+1 row updated.
+
+COMMIT;
+
+Commit complete.
+
+--------------------------------------------------------------------------------------------------
+--DELETE--
+
+DELETE FROM WORKING_HOURS WHERE SSN = '987654321' AND PNumber = 30;
+
+1 row deleted.
+
+DELETE FROM EMPLOYEE WHERE SSN = '123456789';
+
+Error starting at line : 26 in command -
+DELETE FROM EMPLOYEE WHERE SSN = '123456789'
+Error report -
+ORA-02292: integrity constraint (MARIYA.FK_WH_EMPLOYEE) violated - child record found
+
+https://docs.oracle.com/error-help/db/ora-02292/
+
+More Details :
+https://docs.oracle.com/error-help/db/ora-02292/
+
+DELETE FROM WORKING_HOURS WHERE SSN = '123456789';
+
+1 row deleted.
+
+DELETE FROM EMPLOYEE WHERE SSN = '123456789';
+
+1 row deleted.
+
+
+
+SELECT * FROM WORKING_HOURS;
+
+
