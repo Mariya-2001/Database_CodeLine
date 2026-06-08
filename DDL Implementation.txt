@@ -1,0 +1,121 @@
+CREATE TABLE DEPARTMENT (
+    DNUM INT PRIMARY KEY,
+    DName VARCHAR2(50) NOT NULL,
+    SSN CHAR(9),
+    Hiring_Date DATE DEFAULT SYSDATE
+);
+
+
+ALTER TABLE DEPARTMENT ADD CONSTRAINT fk_dept_manager FOREIGN KEY (SSN) REFERENCES EMPLOYEE(SSN);
+
+
+CREATE TABLE LOCATIONS(
+DNUM INT PRIMARY KEY,
+Location VARCHAR2(50)
+);
+
+
+
+CREATE TABLE EMPLOYEE (
+SSN CHAR(9) PRIMARY KEY,
+Fname VARCHAR2(50) NOT NULL,
+Lname VARCHAR2(50) NOT NULL,
+Gender VARCHAR(10) CHECK (Gender IN('Male', 'Female')),
+Birth_date DATE,
+DNum INT NOT NULL,
+Supervisor CHAR(9)
+);
+
+ALTER TABLE EMPLOYEE ADD CONSTRAINT fk_department FOREIGN KEY (DNum) REFERENCES DEPARTMENT(DNum);
+
+
+ALTER TABLE EMPLOYEE ADD CONSTRAINT fk_employee FOREIGN KEY (Supervisor) REFERENCES EMPLOYEE(Supervisor);
+
+Error starting at line : 13 in command -
+ALTER TABLE EMPLOYEE ADD CONSTRAINT fk_employee FOREIGN KEY (Supervisor) REFERENCES EMPLOYEE(Supervisor)
+Error report -
+ORA-02270: no matching unique or primary key for this column-list
+
+https://docs.oracle.com/error-help/db/ora-02270/02270. 00000 -  "no matching unique or primary key for this column-list"
+*Cause:    A REFERENCES clause in a CREATE/ALTER TABLE statement
+           gives a column-list for which there is no matching unique or primary
+           key constraint in the referenced table.
+*Action:   Find the correct column names using the ALL_CONS_COLUMNS
+           catalog view
+
+ALTER TABLE EMPLOYEE ADD CONSTRAINT fk_employee_supervisor FOREIGN KEY (Supervisor) REFERENCES EMPLOYEE(SSN);
+
+
+CREATE TABLE PROJECT(
+PNumber INT PRIMARY KEY,
+PName VARCHAR2(50) NOT NULL,
+Location VARCHAR2(100),
+City VARCHAR2(50)
+); 
+
+ALTER TABLE PROJECT ADD CONSTRAINT fk_department  FOREIGN KEY (DNUM) REFERENCES DEPARTMENT(DNUM);
+
+Error starting at line : 14 in command -
+ALTER TABLE PROJECT ADD CONSTRAINT fk_department  FOREIGN KEY (DNUM) REFERENCES DEPARTMENT(DNUM)
+Error report -
+ORA-00904: "DNUM": invalid identifier
+
+https://docs.oracle.com/error-help/db/ora-00904/00904. 00000 -  "%s: invalid identifier"
+*Cause:    The identifier or column name entered was invalid.
+*Action:   Ensure the following
+
+ALTER TABLE PROJECT ADD DNum INT NOT NULL;
+
+ALTER TABLE PROJECT ADD CONSTRAINT fk_project_department FOREIGN KEY (DNum) REFERENCES DEPARTMENT(DNUM);
+
+
+
+
+CREATE TABLE DEPENDENT(
+Dependent_Name VARCHAR2(50) PRIMARY KEY,
+Gender CHAR(1),
+Birth_Date DATE DEFAULT SYSDATE
+);
+
+ALTER TABLE DEPENDENT ADD SSN INT NOT NULL;
+
+
+ALTER TABLE DEPENDENT ADD CONSTRAINT fk_dependent FOREIGN KEY (SSN) REFERENCES EMPLOYEE(SSN);
+
+
+Error report -
+ORA-02267: column type incompatible with referenced column type
+
+https://docs.oracle.com/error-help/db/ora-02267/02267. 00000 -  "column type incompatible with referenced column type"
+*Cause:    The data type or collation of the referencing column was
+           incompatible with the data type or collation of the referenced
+           column.
+*Action:   Select a compatible data type for the referencing column.
+           Also, the collation of a character column in a foreign key must
+           match the collation of the corresponding column in the primary
+           key.
+
+
+ALTER TABLE DEPENDENT MODIFY SSN CHAR(9);
+
+ALTER TABLE DEPENDENT ADD CONSTRAINT fk_dependent_employee FOREIGN KEY (SSN) REFERENCES EMPLOYEE(SSN) ON DELETE CASCADE;
+
+
+
+CREATE TABLE WORKING_HOURS (
+    SSN CHAR(9),
+    PNumber INT,
+    Hours NUMBER(5,2) NOT NULL,
+    CONSTRAINT pk_working_hours PRIMARY KEY (SSN, PNumber),
+    CONSTRAINT ck_wh_hours CHECK (Hours > 0.0)
+);
+
+ALTER TABLE WORKING_HOURS ADD CONSTRAINT fk_wh_employee FOREIGN KEY (SSN) REFERENCES EMPLOYEE(SSN);
+
+ALTER TABLE WORKING_HOURS ADD CONSTRAINT fk_wh_project FOREIGN KEY (PNumber) REFERENCES PROJECT(PNumber);
+
+
+
+
+
+
